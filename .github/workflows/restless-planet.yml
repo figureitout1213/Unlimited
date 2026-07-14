@@ -1,7 +1,7 @@
 name: Restless Planet Build
 on:
-  push:
-    branches: [restless-planet-build]
+  pull_request:
+    branches: [main]
   workflow_dispatch:
 jobs:
   build:
@@ -15,4 +15,9 @@ jobs:
           python-version: '3.12'
       - name: Build frozen artifact
         run: python restless_planet/build.py
-      - name
+      - name: Upload deliverables
+        uses: actions/upload-artifact@v4
+        with:
+          name: restless-planet-deliverables
+          path: dist/
+          if-no-files-found: error
